@@ -14,8 +14,8 @@ module.exports = require('./webpack.base.babel')({
   entry: {
     polyfill: require.resolve('react-app-polyfill/ie11'),
     app: [
-      path.join(process.cwd(), 'app/bootstrap.js'),
       'webpack-hot-middleware/client?reload=true',
+      path.join(process.cwd(), 'app/bootstrap.js'),
     ],
     app2: path.join(process.cwd(), 'app/app2.js'),
   },
