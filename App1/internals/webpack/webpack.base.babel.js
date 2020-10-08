@@ -4,7 +4,7 @@
 
 const path = require('path');
 const webpack = require('webpack');
-const ModuleFederationPlugin = webpack.container.ModuleFederationPlugin;
+const { ModuleFederationPlugin } = webpack.container;
 
 module.exports = (options) => ({
   mode: options.mode,
@@ -21,7 +21,7 @@ module.exports = (options) => ({
   module: {
     rules: [
       {
-        test: /\.jsx?$/, // Transform all .js and .jsx files required somewhere with Babel
+        test: /\.[j|t]sx?$/, // Transform all .js and .jsx files required somewhere with Babel
         exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
@@ -98,7 +98,7 @@ module.exports = (options) => ({
       library: { type: 'var', name: 'app1' },
       filename: 'remoteEntry.js',
       exposes: {
-        './Button': './app/components/Button',
+        getRemoteButton: './app/exposed/Button/expose.ts',
       },
       remotes: {
         app2: 'app2',
@@ -108,7 +108,7 @@ module.exports = (options) => ({
   ]),
   resolve: {
     modules: ['node_modules', 'app'],
-    extensions: ['.js', '.jsx', '.react.js'],
+    extensions: ['.js', '.jsx', '.react.js', '.ts', '.tsx'],
     mainFields: ['browser', 'jsnext:main', 'main'],
   },
   devtool: options.devtool,

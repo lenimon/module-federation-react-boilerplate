@@ -6,7 +6,10 @@
   "scripts": {
     "start:app1": "cd App1 && npm start",
     "start:app2": "cd App2 && npm start",
-    "start": "concurrently \"npm run start:app1\" \"npm run start:app2\""
+    "start": "concurrently \"npm run start:app1\" \"npm run start:app2\"",
+    "build:app1": "cd App1 && npm run build",
+    "build:app2": "cd App2 && npm run build",
+    "build": "concurrently \"npm run build:app1\" \"npm run build:app2\""
   },
   "keywords": [
     "module-federation",

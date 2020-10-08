@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-function Button(props) {
+export default function(props) {
   return (
     <button
       onClick={() => alert('App1 button clicked')}
@@ -10,5 +10,3 @@ function Button(props) {
     </button>
   );
 }
-
-export default Button;

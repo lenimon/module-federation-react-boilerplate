@@ -9,7 +9,7 @@
 import * as React from 'react';
 import { Helmet } from 'react-helmet';
 import Button from '../../components/Button';
-const RemoteButton = React.lazy(() => import('app1/Button'));
+import LazyButtonWrapper from '../../utils/LazyFedComponent.tsx';
 
 export default function App() {
   return (
@@ -22,9 +22,10 @@ export default function App() {
       </Helmet>
       <h1>App2</h1>
       <Button />
-      <React.Suspense fallback="Loading...">
-        <RemoteButton />
-      </React.Suspense>
+      <LazyButtonWrapper
+        remoteContainer="app1"
+        remoteModule="getRemoteButton"
+      />
     </div>
   );
 }
