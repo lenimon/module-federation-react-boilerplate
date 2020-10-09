@@ -1,10 +1,12 @@
 import * as React from 'react';
+import { Button } from '@material-ui/core'
 
 export default (props) => (
-  <button
+  <Button
     onClick={() => alert('App2 button clicked')}
-    style={{ backgroundColor: 'lightgreen' }}
+    variant="contained"
+    color="primary"
   >
     App2 Button
-  </button>
+  </Button>
 );

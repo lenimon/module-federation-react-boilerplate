@@ -103,7 +103,11 @@ module.exports = (options) => ({
       remotes: {
         app2: 'app2',
       },
-      shared: { react: { singleton: true }, 'react-dom': { singleton: true } },
+      shared: {
+        react: { singleton: true },
+        'react-dom': { singleton: true },
+        '@material-ui/core': { singleton: true },
+      },
     }),
   ]),
   resolve: {
