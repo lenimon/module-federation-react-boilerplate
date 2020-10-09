@@ -24,15 +24,11 @@ function LazyFedComponent(props: Props) {
     onError,
     componentProps,
   } = props;
-  const { ready, failed } = useDynamicScript(
-    `${window.location.protocol}//${window.location.hostname}:${getRemoteUrl(
-      remoteContainer,
-    )}`,
-  );
+
+  const { ready, failed } = useDynamicScript(getRemoteUrl(remoteContainer,true));
   const loadRemoteFactory = async () => {
     try {
       await __webpack_init_sharing__('default');
-      console.log(`READY STATUS for 3002: ${ready}`);
       const container = window[remoteContainer];
       // Initialize the container, it may provide shared modules
       await container.init(__webpack_share_scopes__.default);
@@ -56,7 +52,10 @@ function LazyFedComponent(props: Props) {
     return <span>failed</span>;
   }
 
-  if (Component) return <Component {...componentProps} />;
+  if (Component) {
+    if(componentProps) return <Component {...componentProps} />;
+    return <Component />;
+  }
 
   return <span>Loading...</span>;
 }

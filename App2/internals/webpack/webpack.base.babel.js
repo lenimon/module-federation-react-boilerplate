@@ -101,7 +101,7 @@ module.exports = (options) => ({
         app1: 'app1',
       },
       exposes: {
-        './Button': './app/components/Button',
+        getRemoteButton: './app/exposed/Button/expose.ts',
       },
       shared: { react: { singleton: true }, 'react-dom': { singleton: true } },
     }),

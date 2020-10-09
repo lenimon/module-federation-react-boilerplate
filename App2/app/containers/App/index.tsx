@@ -9,7 +9,7 @@
 import * as React from 'react';
 import { Helmet } from 'react-helmet';
 import Button from '../../components/Button';
-import LazyButtonWrapper from '../../utils/LazyFedComponent.tsx';
+import LazyButtonWrapper from '../../utils/LazyFedComponent';
 
 export default function App() {
   return (

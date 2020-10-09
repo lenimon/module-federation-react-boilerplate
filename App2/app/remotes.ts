@@ -1,6 +1,6 @@
 const remotes = {
-  APP1_FULL: 'http://localhost:3001/remoteEntry.js',
-  APP1_REL: '3001/remoteEntry.js',
+  APP1_FULL: 'http://localhost:5001/remoteEntry.js',
+  APP1_REL: '5001/remoteEntry.js',
 };
 
 export const getRemoteUrl = (remoteContainer, fullPath=false) => {
