@@ -32,6 +32,8 @@ import configureStore from './configureStore';
 // Import i18n messages
 import { translationMessages } from './i18n';
 
+import {loadAllRemotes } from 'remotes'
+
 // Observe loading of Open Sans (to remove open sans, remove the <link> tag in
 // the index.html file and this observer)
 const openSansObserver = new FontFaceObserver('Open Sans', {});
@@ -46,7 +48,7 @@ const initialState = {};
 const store = configureStore(initialState, history);
 const MOUNT_NODE = document.getElementById('app');
 
-const render = messages => {
+const render = async messages => {
   ReactDOM.render(
     <Provider store={store}>
       <LanguageProvider messages={messages}>
@@ -58,32 +60,34 @@ const render = messages => {
     MOUNT_NODE,
   );
 };
-
-if (module.hot) {
-  // Hot reloadable React components and translation json files
-  // modules.hot.accept does not accept dynamic dependencies,
-  // have to be constants at compile-time
-  module.hot.accept(['./i18n', 'containers/App'], () => {
-    ReactDOM.unmountComponentAtNode(MOUNT_NODE);
-    render(translationMessages);
-  });
-}
-
-// Chunked polyfill for browsers without Intl support
-if (!window.Intl) {
-  new Promise(resolve => {
-    resolve(import('intl'));
-  })
-    .then(() =>
-      Promise.all([
-        import('intl/locale-data/jsonp/en.js'),
-        import('intl/locale-data/jsonp/de.js'),
-      ]),
-    ) // eslint-disable-line prettier/prettier
-    .then(() => render(translationMessages))
-    .catch(err => {
-      throw err;
+  // Load all remote entries
+Promise.all(loadAllRemotes('REL')).then(()=>{ //REL refers to relative remote urls with respect to host domain. Change it to FULL if you need full path and change in remotes.ts accordingly
+  if (module.hot) {
+    // Hot reloadable React components and translation json files
+    // modules.hot.accept does not accept dynamic dependencies,
+    // have to be constants at compile-time
+    module.hot.accept(['./i18n', 'containers/App'], () => {
+      ReactDOM.unmountComponentAtNode(MOUNT_NODE);
+      render(translationMessages);
     });
-} else {
-  render(translationMessages);
-}
+  }
+
+  // Chunked polyfill for browsers without Intl support
+  if (!window.Intl) {
+    new Promise(resolve => {
+      resolve(import('intl'));
+    })
+      .then(() =>
+        Promise.all([
+          import('intl/locale-data/jsonp/en.js'),
+          import('intl/locale-data/jsonp/de.js'),
+        ]),
+      ) // eslint-disable-line prettier/prettier
+      .then(() => render(translationMessages))
+      .catch(err => {
+        throw err;
+      });
+  } else {
+    render(translationMessages);
+  }
+});

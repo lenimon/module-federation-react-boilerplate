@@ -9,7 +9,8 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
 import Button from '../../components/Button';
-import LazyButtonWrapper from '../../utils/LazyFedComponent';
+import ConnectedCard from '../../containers/connectedCard';
+import LoadRemoteCmp from '../../utils/LoadRemoteCmp';
 
 export default function App() {
   return (
@@ -22,10 +23,11 @@ export default function App() {
       </Helmet>
       <h1>App1</h1>
       <Button />
-      <LazyButtonWrapper
+      <LoadRemoteCmp
         remoteContainer="app2"
         remoteModule="getRemoteButton"
       />
+      <ConnectedCard />
     </div>
   );
 }

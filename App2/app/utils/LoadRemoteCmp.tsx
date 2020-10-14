@@ -12,7 +12,7 @@ type Props = {
   componentProps: any;
 };
 
-function LazyFedComponent(props: Props) {
+function LoadRemoteCmp(props: Props) {
   const [Component, setComponent] = React.useState<React.ComponentType | null>(
     null,
   );
@@ -25,7 +25,6 @@ function LazyFedComponent(props: Props) {
     componentProps,
   } = props;
 
-  const { ready, failed } = useDynamicScript(getRemoteUrl(remoteContainer,true));
   const loadRemoteFactory = async () => {
     try {
       await __webpack_init_sharing__('default');
@@ -42,11 +41,11 @@ function LazyFedComponent(props: Props) {
       onError && onError(error);
     }
   };
-  React.useEffect(() => {
-    if (ready && !failed) {
-      loadRemoteFactory();
-    }
-  }, [ready, failed]);
+
+  React.useEffect(()=>{
+    loadRemoteFactory();
+    return ()=>{console.log("unmounting")}
+  },[])
 
   if (status === 'failed') {
     return <span>failed</span>;
@@ -60,4 +59,4 @@ function LazyFedComponent(props: Props) {
   return <span>Loading...</span>;
 }
 
-export default LazyFedComponent;
+export default LoadRemoteCmp;

@@ -1,17 +1,50 @@
 const remotes = {
-  APP1_FULL: 'http://localhost:5001/remoteEntry.js',
-  APP1_REL: '5001/remoteEntry.js',
+  FULL:{
+    APP1: 'http://localhost:5001/remoteEntry.js',
+  },
+  REL:{
+    APP1: '5001/remoteEntry.js',
+  }
 };
 
-export const getRemoteUrl = (remoteContainer, fullPath=false) => {
-  if (remoteContainer){
-    const base = remoteContainer.toUpperCase()
-    if(fullPath)
-    {
-       return remotes[`${base}_FULL`];
-    }else{
-      return `${window.location.protocol}//${window.location.hostname}:${remotes[`${base}_REL`]}`
+const loadRemoteUrl = async (url)=>{
+  return new Promise((resolve, reject)=>{
+    const element = document.createElement('script');
+    element.id = url;
+    element.src = url;
+    element.type = 'text/javascript';
+    element.onload = () => {
+      console.log(`loaded ${url}`);
+      resolve(`loaded ${url}`);
+    };
+    element.onerror = () => {
+      document.head.removeChild(element);
+      reject(`failed to load ${url}`);
+    };
+    document.head.appendChild(element);
+  });
+}
+
+export const getRemoteUrl = (remoteScope, type) => {
+  const url = remotes[type.toUpperCase()][remoteScope.toUpperCase()];
+  if(url){
+    if(type.toUpperCase()=="REL"){
+      return `${window.location.protocol}//${window.location.hostname}:${url}`
+    } else{
+      return url;
     }
   }
   return null;
 };
+
+export const loadAllRemotes = (type="REL") =>{
+    const remoteScopes = Object.keys(remotes[type]);
+    const remoteEntries = [];
+    try{
+      remoteScopes.map((remoteScope) => remoteEntries.push(loadRemoteUrl(getRemoteUrl(remoteScope, type))));
+      return remoteEntries;
+      // Promise.all(remoteEntries).then((r)=>{console.log("loaded");})
+    }catch(e){
+      console.log(e)
+    }
+}

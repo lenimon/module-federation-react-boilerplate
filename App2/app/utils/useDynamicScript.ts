@@ -6,6 +6,7 @@ export const useDynamicScript = (url) => {
 
   React.useEffect(() => {
     if (url && document.getElementById(url)) {
+      debugger;
       setReady(true);
       return;
     }

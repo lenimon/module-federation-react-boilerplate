@@ -12,10 +12,11 @@ type Props = {
   componentProps: any;
 };
 
-function LazyFedComponent(props: Props) {
+function LoadRemoteCmp(props: Props) {
   const [Component, setComponent] = React.useState<React.ComponentType | null>(
     null,
   );
+  const isMounted = React.useRef(false);
   const [status, setStatus] = React.useState('not loaded');
   const {
     remoteContainer,
@@ -43,15 +44,18 @@ function LazyFedComponent(props: Props) {
     }
   };
   React.useEffect(() => {
-    if (ready && !failed) {
+    if (ready && !failed && isMounted.current) {
       loadRemoteFactory();
     }
   }, [ready, failed]);
+
+  React.useEffect(()=>{return ()=>{console.log("unmounting")}},[])
 
   if (status === 'failed') {
     return <span>failed</span>;
   }
 
+  debugger;
   if (Component) {
     if(componentProps) return <Component {...componentProps} />;
     return <Component />;
@@ -60,4 +64,4 @@ function LazyFedComponent(props: Props) {
   return <span>Loading...</span>;
 }
 
-export default LazyFedComponent;
+export default LoadRemoteCmp;

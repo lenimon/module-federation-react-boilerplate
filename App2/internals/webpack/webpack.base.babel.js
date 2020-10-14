@@ -105,6 +105,7 @@ module.exports = (options) => ({
       },
       shared: {
         react: { singleton: true },
+        'react-redux': { singleton: true },
         'react-dom': { singleton: true },
         '@material-ui/core': { singleton: true },
       },

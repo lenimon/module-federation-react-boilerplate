@@ -9,7 +9,9 @@
 import * as React from 'react';
 import { Helmet } from 'react-helmet';
 import Button from '../../components/Button';
-import LazyButtonWrapper from '../../utils/LazyFedComponent';
+import { useInjectSaga } from 'utils/injectSaga';
+import { useInjectReducer } from 'utils/injectReducer';
+import LoadRemoteCmp from 'utils/LoadRemoteCmp';
 
 export default function App() {
   return (
@@ -22,9 +24,21 @@ export default function App() {
       </Helmet>
       <h1>App2</h1>
       <Button />
-      <LazyButtonWrapper
+      <LoadRemoteCmp
         remoteContainer="app1"
         remoteModule="getRemoteButton"
+      />
+      <LoadRemoteCmp
+        remoteContainer="app1"
+        remoteModule="getRemoteButton"
+      />
+      <LoadRemoteCmp
+        remoteContainer="app1"
+        remoteModule="getConnectedCard"
+        config={{
+          useInjectSaga,
+          useInjectReducer
+        }}
       />
     </div>
   );

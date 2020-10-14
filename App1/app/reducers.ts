@@ -4,9 +4,12 @@
 
 import { combineReducers } from 'redux';
 import { connectRouter } from 'connected-react-router';
-
-import history from 'utils/history';
-import languageProviderReducer from 'containers/LanguageProvider/reducer';
+import history from './utils/history';
+import languageProviderReducer from './containers/LanguageProvider/reducer';
+import { SimpleCard } from "./containers/connectedCard/reducer";
+export type State = {
+  simpleCard?: SimpleCard;
+};
 
 /**
  * Merges the main reducer with the router state and dynamically injected reducers

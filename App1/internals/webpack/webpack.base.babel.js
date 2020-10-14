@@ -98,13 +98,15 @@ module.exports = (options) => ({
       library: { type: 'var', name: 'app1' },
       filename: 'remoteEntry.js',
       exposes: {
-        getRemoteButton: './app/exposed/Button/expose.ts',
+        getRemoteButton: './app/exposed/Button/expose',
+        getConnectedCard: './app/exposed/connectedCard/expose',
       },
       remotes: {
         app2: 'app2',
       },
       shared: {
         react: { singleton: true },
+        'react-redux': { singleton: true },
         'react-dom': { singleton: true },
         '@material-ui/core': { singleton: true },
       },
