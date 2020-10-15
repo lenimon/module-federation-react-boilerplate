@@ -9,7 +9,7 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
 import Button from '../../components/Button';
-import ConnectedCard from '../../containers/connectedCard';
+import ConnectedCard from '../ConnectedCard';
 import LoadRemoteCmp from '../../utils/LoadRemoteCmp';
 
 export default function App() {

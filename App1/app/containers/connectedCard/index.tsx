@@ -14,7 +14,7 @@ import saga from './saga';
 import SimpleCard, { ActionProps, DataProps } from '../../components/SimpleCard';
 import { click } from './actions';
 import {
-  makeSelectSimpleCard
+  makeSelectSimpleCard,
 } from './selectors';
 
 function ConnectedCard(props) {
@@ -24,6 +24,8 @@ function ConnectedCard(props) {
   useInjectReducer({ key: 'simplecard', reducer });
   useInjectSaga({ key: 'simplecard', saga });
 
+  React.useEffect(()=>{console.log("connected_card")},[props.simplecardData])
+
   return (
     <SimpleCard
       {...props}
@@ -32,7 +34,7 @@ function ConnectedCard(props) {
 }
 
 const mapStateToProps: (state) => DataProps = createStructuredSelector({
-  simplecardData: makeSelectSimpleCard()
+  simplecardData: makeSelectSimpleCard
 });
 
 function mapDispatchToProps(dispatch): ActionProps {

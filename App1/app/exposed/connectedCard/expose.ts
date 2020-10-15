@@ -1,4 +1,4 @@
-import connectedCard from '../../containers/connectedCard';
+import connectedCard from '../../containers/ConnectedCard';
 import { setUseInjectSaga, setUseInjectReducer } from '../../containers/config'
 export default function getConnectedCard({
   useInjectSaga,

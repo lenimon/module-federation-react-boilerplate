@@ -37,14 +37,14 @@ export const getRemoteUrl = (remoteScope, type) => {
   return null;
 };
 
-export const loadAllRemotes = (type="REL") =>{
+export const loadAllRemotes: Array<Object> = (type="REL") =>{
     const remoteScopes = Object.keys(remotes[type]);
     const remoteEntries = [];
     try{
       remoteScopes.map((remoteScope) => remoteEntries.push(loadRemoteUrl(getRemoteUrl(remoteScope, type))));
       return remoteEntries;
-      // Promise.all(remoteEntries).then((r)=>{console.log("loaded");})
     }catch(e){
       console.log(e)
     }
+    return remoteEntries;
 }

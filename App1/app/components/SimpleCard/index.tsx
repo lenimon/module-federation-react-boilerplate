@@ -37,11 +37,16 @@ export default function(props: Props) {
   const classes = useStyles();
   const { keyword, defenition } = props.simplecardData;
   const onClickBtn = function(e){
+    console.log(props);
     props.click({
-      keyword: "key",
-      defenition: "def"
+      keyword: "click_key",
+      defenition: "click_def"
     })
   }
+
+  React.useEffect(()=>{
+    console.log(props.simplecardData)
+  },[]);
 
   return (
     <Card className={classes.root}>
