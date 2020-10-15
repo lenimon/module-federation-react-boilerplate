@@ -1,6 +1,5 @@
 import * as React from 'react';
-import { useDynamicScript } from './useDynamicScript';
-import { getRemoteUrl } from '../remotes';
+
 type Props = {
   remoteContainer: any;
   remoteModule: any;

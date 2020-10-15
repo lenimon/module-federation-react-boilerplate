@@ -98,7 +98,6 @@ module.exports = (options) => ({
       library: { type: 'var', name: 'app1' },
       filename: 'remoteEntry.js',
       exposes: {
-        getRemoteButton: './app/exposed/Button/expose',
         getConnectedCard: './app/exposed/connectedCard/expose',
       },
       remotes: {

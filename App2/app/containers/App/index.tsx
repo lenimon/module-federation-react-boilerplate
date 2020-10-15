@@ -26,14 +26,6 @@ export default function App() {
       <Button />
       <LoadRemoteCmp
         remoteContainer="app1"
-        remoteModule="getRemoteButton"
-      />
-      <LoadRemoteCmp
-        remoteContainer="app1"
-        remoteModule="getRemoteButton"
-      />
-      <LoadRemoteCmp
-        remoteContainer="app1"
         remoteModule="getConnectedCard"
         config={{
           useInjectSaga,

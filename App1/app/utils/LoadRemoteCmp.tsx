@@ -1,6 +1,5 @@
 import * as React from 'react';
-import { useDynamicScript } from './useDynamicScript';
-import { getRemoteUrl } from '../remotes';
+
 type Props = {
   remoteContainer: any;
   remoteModule: any;
@@ -16,7 +15,6 @@ function LoadRemoteCmp(props: Props) {
   const [Component, setComponent] = React.useState<React.ComponentType | null>(
     null,
   );
-  const isMounted = React.useRef(false);
   const [status, setStatus] = React.useState('not loaded');
   const {
     remoteContainer,
@@ -26,7 +24,6 @@ function LoadRemoteCmp(props: Props) {
     componentProps,
   } = props;
 
-  const { ready, failed } = useDynamicScript(getRemoteUrl(remoteContainer,true));
   const loadRemoteFactory = async () => {
     try {
       await __webpack_init_sharing__('default');
@@ -43,19 +40,16 @@ function LoadRemoteCmp(props: Props) {
       onError && onError(error);
     }
   };
-  React.useEffect(() => {
-    if (ready && !failed && isMounted.current) {
-      loadRemoteFactory();
-    }
-  }, [ready, failed]);
 
-  React.useEffect(()=>{return ()=>{console.log("unmounting")}},[])
+  React.useEffect(()=>{
+    loadRemoteFactory();
+    return ()=>{console.log("unmounting")}
+  },[])
 
   if (status === 'failed') {
     return <span>failed</span>;
   }
 
-  debugger;
   if (Component) {
     if(componentProps) return <Component {...componentProps} />;
     return <Component />;

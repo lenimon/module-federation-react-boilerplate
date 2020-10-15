@@ -6,9 +6,9 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import { func } from 'prop-types';
+import { withStyles } from '@material-ui/styles';
 
-const useStyles = makeStyles({
+const styles = theme => ({
   root: {
     maxWidth: 345,
   },
@@ -31,40 +31,46 @@ export type DataProps = {
   }
 };
 
-type Props = ActionProps & DataProps
+type Props = ActionProps & DataProps & {
+  classes: any;
+  className?: string;
+  style?: any;
+}
 
-export default function(props: Props) {
-  const classes = useStyles();
-  const { keyword, defenition } = props.simplecardData;
-  const onClickBtn = function(e){
-    console.log(props);
-    props.click({
-      keyword: "click_key",
-      defenition: "click_def"
-    })
+class SimpleCard extends React.Component<Props, State>  {
+  constructor(props: Props){
+    super(props);
   }
 
-  React.useEffect(()=>{
-    console.log(props.simplecardData)
-  },[]);
-
-  return (
-    <Card className={classes.root}>
-      <CardActionArea>
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="h2">
-            {keyword}
-          </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
-            {defenition}
-          </Typography>
-        </CardContent>
-      </CardActionArea>
-      <CardActions>
-        <Button onClick={onClickBtn} size="small" color="primary">
-          Click
-        </Button>
-      </CardActions>
-    </Card>
-  );
+  render(){
+    const { classes, click } = this.props;
+    const { keyword, defenition } = this.props.simplecardData;
+    const onClickBtn = function(e){
+      click({
+        keyword: "click_key",
+        defenition: "click_def"
+      })
+    }
+    return (
+      <Card className={classes.root}>
+        <CardActionArea>
+          <CardContent>
+            <Typography gutterBottom variant="h5" component="h2">
+              {keyword}
+            </Typography>
+            <Typography variant="body2" color="textSecondary" component="p">
+              {defenition}
+            </Typography>
+          </CardContent>
+        </CardActionArea>
+        <CardActions>
+          <Button onClick={onClickBtn} size="small" color="primary">
+            Click
+          </Button>
+        </CardActions>
+      </Card>
+    );
+  }
 }
+
+export default withStyles(styles)(SimpleCard);

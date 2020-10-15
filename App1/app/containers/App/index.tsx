@@ -22,7 +22,6 @@ export default function App() {
         <meta name="description" content="A React.js Boilerplate application" />
       </Helmet>
       <h1>App1</h1>
-      <Button />
       <LoadRemoteCmp
         remoteContainer="app2"
         remoteModule="getRemoteButton"
