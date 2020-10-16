@@ -8,11 +8,21 @@
 
 import React from 'react';
 import { Helmet } from 'react-helmet';
-import Button from '../../components/Button';
 import ConnectedCard from '../ConnectedCard';
 import LoadRemoteCmp from '../../utils/LoadRemoteCmp';
 
 export default function App() {
+  const exposedRef = React.useRef({ methods: {} });
+
+  // bind exposed methods from remote to host page
+  const setExposedMethods = (exposedMethods) => {
+    exposedRef.current.methods = exposedMethods;
+  };
+
+  const saveClickHandler = () => {
+    exposedRef.current.methods.exposedOnClick();
+  };
+
   return (
     <div>
       <Helmet
@@ -25,8 +35,11 @@ export default function App() {
       <LoadRemoteCmp
         remoteContainer="app2"
         remoteModule="getRemoteButton"
+        componentProps={{
+          clickedButton: saveClickHandler,
+        }}
       />
-      <ConnectedCard />
+      <ConnectedCard getExposedMethods={setExposedMethods} />
     </div>
   );
 }

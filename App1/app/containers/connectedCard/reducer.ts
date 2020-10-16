@@ -4,15 +4,13 @@
  *
  */
 import produce from 'immer';
-import {
-  LOAD
-} from './constants';
+import { SEL_KEY, LOAD } from './constants';
 
 export type SimpleCardData = {
-  simplecard?: SimpleCard;
+  'connected/simplecard/DATA'?: CardData;
 };
 
-export type SimpleCard = {
+export type CardData = {
   keyword: string;
   defenition: string;
 };
@@ -24,7 +22,7 @@ export const initialState = {
 
 /* eslint-disable default-case, no-param-reassign */
 const simplecardReducer = (
-  state: SimpleCard = initialState,
+  state: CardData = initialState,
   action,
 ) =>
   produce(state, (draft) => {

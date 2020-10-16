@@ -7,9 +7,9 @@ const remotes = {
   }
 };
 
-const loadRemoteUrl = async (url)=>{
+const loadRemoteUrl:Function = async (url: string):Promise<Object>=>{
   return new Promise((resolve, reject)=>{
-    const element = document.createElement('script');
+    const element:HTMLScriptElement = document.createElement('script');
     element.id = url;
     element.src = url;
     element.type = 'text/javascript';
@@ -25,7 +25,7 @@ const loadRemoteUrl = async (url)=>{
   });
 }
 
-export const getRemoteUrl = (remoteScope, type) => {
+export const getRemoteUrl:Function = (remoteScope:string, type:string) => {
   const url = remotes[type.toUpperCase()][remoteScope.toUpperCase()];
   if(url){
     if(type.toUpperCase()=="REL"){
@@ -37,9 +37,9 @@ export const getRemoteUrl = (remoteScope, type) => {
   return null;
 };
 
-export const loadAllRemotes: Array<Promise<Object>> = (type="REL") =>{
+export const loadAllRemotes:Function = (type:string="REL"): Array<Promise<Object>> =>{
     const remoteScopes = Object.keys(remotes[type]);
-    const remoteEntries = [];
+    const remoteEntries:Array<Promise<Object>> = [];
     try{
       remoteScopes.map((remoteScope) => remoteEntries.push(loadRemoteUrl(getRemoteUrl(remoteScope, type))));
       return remoteEntries;

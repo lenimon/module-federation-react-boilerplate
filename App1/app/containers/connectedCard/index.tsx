@@ -10,6 +10,7 @@ import { createStructuredSelector } from 'reselect';
 import { compose, bindActionCreators } from 'redux';
 import { getUseInjectSaga, getUseInjectReducer } from '../config';
 import reducer from './reducer';
+import { SEL_KEY } from './constants';
 import saga from './saga';
 import SimpleCard, { ActionProps, DataProps } from '../../components/SimpleCard';
 import { click } from './actions';
@@ -21,18 +22,30 @@ function ConnectedCard(props) {
   const useInjectReducer = getUseInjectReducer();
   const useInjectSaga = getUseInjectSaga();
   // eslint-disable-line
-  useInjectReducer({ key: 'simplecard', reducer });
-  useInjectSaga({ key: 'simplecard', saga });
+  useInjectReducer({ key: SEL_KEY, reducer });
+  useInjectSaga({ key: SEL_KEY, saga });
+  const refSimpleCard = React.useRef(null);
+
+  React.useEffect(() => {
+    if (refSimpleCard.current) {
+      props.getExposedMethods({
+        exposedOnClick: () => {
+          refSimpleCard?.current?.onClickBtn();
+        },
+      });
+    }
+  }, [refSimpleCard.current]);
 
   return (
     <SimpleCard
       {...props}
+      simpleCardRef={refSimpleCard}
     />
   );
 }
 
 const mapStateToProps: (state) => DataProps = createStructuredSelector({
-  simplecardData: makeSelectSimpleCard
+  [SEL_KEY]: makeSelectSimpleCard
 });
 
 function mapDispatchToProps(dispatch): ActionProps {

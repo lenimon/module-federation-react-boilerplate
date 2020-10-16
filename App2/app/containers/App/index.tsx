@@ -8,12 +8,23 @@
 
 import * as React from 'react';
 import { Helmet } from 'react-helmet';
-import Button from '../../components/Button';
+import ButtonCmp from '../../components/ButtonCmp';
 import { useInjectSaga } from 'utils/injectSaga';
 import { useInjectReducer } from 'utils/injectReducer';
 import LoadRemoteCmp from 'utils/LoadRemoteCmp';
 
 export default function App() {
+  const exposedRef = React.useRef({ methods: {} });
+
+  // bind exposed methods from remote to host page
+  const setExposedMethods = (exposedMethods) => {
+    exposedRef.current.methods = exposedMethods;
+  };
+
+  const saveClickHandler = () => {
+    exposedRef.current.methods.exposedOnClick();
+  };
+
   return (
     <div>
       <Helmet
@@ -23,7 +34,6 @@ export default function App() {
         <meta name="description" content="A React.js Boilerplate application" />
       </Helmet>
       <h1>App2</h1>
-      <Button />
       <LoadRemoteCmp
         remoteContainer="app1"
         remoteModule="getConnectedCard"
@@ -31,7 +41,11 @@ export default function App() {
           useInjectSaga,
           useInjectReducer
         }}
+        componentProps={{
+          getExposedMethods: setExposedMethods,
+        }}
       />
+      <ButtonCmp clickedButton={saveClickHandler}/>
     </div>
   );
 }

@@ -1,5 +1,4 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
@@ -7,6 +6,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/styles';
+import { SEL_KEY } from '../../containers/ConnectedCard/constants';
 
 const styles = theme => ({
   root: {
@@ -25,7 +25,7 @@ export type ActionProps = {
 };
 
 export type DataProps = {
-  simplecardData:{
+  [SEL_KEY]:{
     keyword: string;
     defenition: string;
   }
@@ -37,20 +37,22 @@ type Props = ActionProps & DataProps & {
   style?: any;
 }
 
-class SimpleCard extends React.Component<Props, State>  {
+class SimpleCard extends React.Component<Props>  {
   constructor(props: Props){
     super(props);
   }
 
+  // Exposing the onClickBtn handler. On call, invokes the click dispatch action from props
+  onClickBtn = () => {
+    this.props.click({
+      keyword: "click_key",
+      defenition: "click_def"
+    })
+  }
+
   render(){
     const { classes, click } = this.props;
-    const { keyword, defenition } = this.props.simplecardData;
-    const onClickBtn = function(e){
-      click({
-        keyword: "click_key",
-        defenition: "click_def"
-      })
-    }
+    const { keyword, defenition } = this.props[SEL_KEY];
     return (
       <Card className={classes.root}>
         <CardActionArea>
@@ -63,14 +65,14 @@ class SimpleCard extends React.Component<Props, State>  {
             </Typography>
           </CardContent>
         </CardActionArea>
-        <CardActions>
-          <Button onClick={onClickBtn} size="small" color="primary">
-            Click
-          </Button>
-        </CardActions>
       </Card>
     );
   }
 }
 
-export default withStyles(styles)(SimpleCard);
+// Proxy wrapper over class component not needed unless the ref is not passed down by the composer wrappers
+function SimpleCardProxy(props) {
+  return <SimpleCard {...props} ref={props.simpleCardRef} />;
+}
+
+export default withStyles(styles)(SimpleCardProxy);

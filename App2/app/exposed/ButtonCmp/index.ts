@@ -1,4 +1,4 @@
-import ButtonComponent from '../../components/Button';
+import ButtonComponent from '../../components/ButtonCmp';
 import * as React from 'react';
 
 export default function getRemoteButton() {
