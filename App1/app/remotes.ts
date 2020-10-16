@@ -37,7 +37,7 @@ export const getRemoteUrl = (remoteScope, type) => {
   return null;
 };
 
-export const loadAllRemotes: Array<Object> = (type="REL") =>{
+export const loadAllRemotes: Array<Promise<Object>> = (type="REL") =>{
     const remoteScopes = Object.keys(remotes[type]);
     const remoteEntries = [];
     try{

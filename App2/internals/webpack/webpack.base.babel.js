@@ -4,6 +4,7 @@
 
 const path = require('path');
 const webpack = require('webpack');
+const exposed = require('../../app/exposed');
 const { ModuleFederationPlugin } = webpack.container;
 
 module.exports = (options) => ({
@@ -100,14 +101,13 @@ module.exports = (options) => ({
       remotes: {
         app1: 'app1',
       },
-      exposes: {
-        getRemoteButton: './app/exposed/Button/expose.ts',
-      },
+      exposes: exposed,
       shared: {
         react: { singleton: true },
         'react-redux': { singleton: true },
         'react-dom': { singleton: true },
         '@material-ui/core': { singleton: true },
+        '@material-ui/styles': { singleton: true },
       },
     }),
   ]),

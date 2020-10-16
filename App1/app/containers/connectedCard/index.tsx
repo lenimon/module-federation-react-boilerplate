@@ -24,8 +24,6 @@ function ConnectedCard(props) {
   useInjectReducer({ key: 'simplecard', reducer });
   useInjectSaga({ key: 'simplecard', saga });
 
-  React.useEffect(()=>{console.log("connected_card")},[props.simplecardData])
-
   return (
     <SimpleCard
       {...props}

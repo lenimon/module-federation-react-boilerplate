@@ -8,6 +8,10 @@ import {
   LOAD
 } from './constants';
 
+export type SimpleCardData = {
+  simplecard?: SimpleCard;
+};
+
 export type SimpleCard = {
   keyword: string;
   defenition: string;

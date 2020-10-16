@@ -4,6 +4,7 @@
 
 const path = require('path');
 const webpack = require('webpack');
+const exposed = require('../../app/exposed/');
 const { ModuleFederationPlugin } = webpack.container;
 
 module.exports = (options) => ({
@@ -97,9 +98,7 @@ module.exports = (options) => ({
       name: 'app1',
       library: { type: 'var', name: 'app1' },
       filename: 'remoteEntry.js',
-      exposes: {
-        getConnectedCard: './app/exposed/connectedCard/expose',
-      },
+      exposes: exposed,
       remotes: {
         app2: 'app2',
       },
@@ -108,6 +107,7 @@ module.exports = (options) => ({
         'react-redux': { singleton: true },
         'react-dom': { singleton: true },
         '@material-ui/core': { singleton: true },
+        '@material-ui/styles': { singleton: true },
       },
     }),
   ]),
