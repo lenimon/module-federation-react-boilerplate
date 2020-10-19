@@ -24,10 +24,11 @@ App
 ->->……components, containers,…
 ->utils
 ->->LoadRemoteCmp.tsx
+->->remotes.ts
 ->->useDynamicScript.ts
 ->->…reducerInjectors.ts, sagaInjectors.ts…
 ->app.tsx
-->remotes.ts
+->app1/2.tsx
 ->…bootstrap.ts, reducers.ts, index.html…
 ->Internals
 ->->webpack
@@ -42,9 +43,9 @@ App
 * [app->federation->exposed] - holds the component/container factories which are exposed
 * [app->federation->config.json] - module federation specific configurations. This doesn't qualify as the sole configuration. This json is just an easier access lookup which is mapped to the webpack configuration and remotes.ts with exposed and remotes related configurations.
 * [app->utils->LoadRemoteCmp.tsx] - The remote container and remote module lazy loading and mounting is handled by this wrapper component 
+* [app/utils/remotes.tsx] - This file has the utilities to load the remoteEntries.
 * [app->utils->useDynamicScript.ts] - Incase a remoteEntry or other dependency is expected to be loaded and mounted on demand instead of preloading on app launch, this hook could be used. Currently this hook is not used in this example. We are preloading all remoteEntries on app launch itself.
 * [app1/2.tsx] - This file will be invoked by the remoteEntry from the host app to resolve the relative path issue, when import(remoteContainer/remoteModule) way of importing is used. In our scenario this is not necessary. We are encapsulating the container and module load mounts in LoadRemoteCmp.tsx utility wrapper. There we access the remote scope from the window object directly instead of expecting webpack to resolve import(remoteContainer/remoteModule) for us. But you could use import(remoteContainer/remoteModule) import pattern incase if you need to load a module without relying on LoadRemoteCmp utility and it would work perfectly fine due to this file here.
-* [remotes.tsx] - This file has the utilities to load the remoteEntries. At first the remote configurations were also placed in this file, which is moved up to the federation->configjson now. Since it just have utilities now we may need to move this in to the utilities section later.
 
 ### Installation
 

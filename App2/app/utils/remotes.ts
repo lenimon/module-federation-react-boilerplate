@@ -1,4 +1,4 @@
-import { remoteEntries as remotes } from './federation/config.json';
+import { remoteEntries as remotes } from '../federation/config.json';
 
 const loadRemoteUrl:Function = async (url: string):Promise<Object>=>{
   return new Promise((resolve, reject)=>{
