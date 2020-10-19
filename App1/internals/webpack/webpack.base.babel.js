@@ -4,7 +4,7 @@
 
 const path = require('path');
 const webpack = require('webpack');
-const exposed = require('../../app/exposed/');
+const federationConfig = require('../../app/federation/config.json');
 const { ModuleFederationPlugin } = webpack.container;
 
 module.exports = (options) => ({
@@ -95,13 +95,11 @@ module.exports = (options) => ({
       NODE_ENV: 'development',
     }),
     new ModuleFederationPlugin({
-      name: 'app1',
-      library: { type: 'var', name: 'app1' },
+      name: federationConfig.hostScope,
+      library: { type: 'var', name: federationConfig.hostScope },
       filename: 'remoteEntry.js',
-      exposes: exposed,
-      remotes: {
-        app2: 'app2',
-      },
+      remotes: federationConfig.remoteScopes,
+      exposes: federationConfig.exposedFactories,
       shared: {
         react: { singleton: true },
         'react-redux': { singleton: true },

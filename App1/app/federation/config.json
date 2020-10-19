@@ -1,0 +1,15 @@
+{
+  "hostScope": "app1",
+  "remoteScopes": {
+    "app2": "app2"
+  },
+  "remoteEntries": {
+    "app2":{
+      "full_path": "http://localhost:5002/remoteEntry.js",
+      "relative_path": "5002/remoteEntry.js"
+    }
+  },
+  "exposedFactories": {
+    "getConnectedCard": "./app/federation/exposed/ConnectedCardFactory"
+  }
+}

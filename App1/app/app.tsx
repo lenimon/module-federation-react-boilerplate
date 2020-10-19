@@ -61,7 +61,7 @@ const render = async messages => {
   );
 };
   // Load all remote entries
-Promise.all(loadAllRemotes('REL')).then(()=>{ //REL refers to relative remote urls with respect to host domain. Change it to FULL if you need full path and change in remotes.ts accordingly
+Promise.all(loadAllRemotes()).then(()=>{ //REL refers to relative remote urls with respect to host domain. Change it to FULL if you need full path and change in remotes.ts accordingly
   if (module.hot) {
     // Hot reloadable React components and translation json files
     // modules.hot.accept does not accept dynamic dependencies,

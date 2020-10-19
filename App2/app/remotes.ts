@@ -1,11 +1,4 @@
-const remotes = {
-  FULL:{
-    APP1: 'http://localhost:5001/remoteEntry.js',
-  },
-  REL:{
-    APP1: '5001/remoteEntry.js',
-  }
-};
+import { remoteEntries as remotes } from './federation/config.json';
 
 const loadRemoteUrl:Function = async (url: string):Promise<Object>=>{
   return new Promise((resolve, reject)=>{
@@ -26,9 +19,9 @@ const loadRemoteUrl:Function = async (url: string):Promise<Object>=>{
 }
 
 export const getRemoteUrl:Function = (remoteScope:string, type:string) => {
-  const url = remotes[type.toUpperCase()][remoteScope.toUpperCase()];
+  const url = remotes[remoteScope.toLowerCase()][`${type.toLowerCase()}_path`];
   if(url){
-    if(type.toUpperCase()=="REL"){
+    if(type.toLowerCase()=="relative"){
       return `${window.location.protocol}//${window.location.hostname}:${url}`
     } else{
       return url;
@@ -37,8 +30,8 @@ export const getRemoteUrl:Function = (remoteScope:string, type:string) => {
   return null;
 };
 
-export const loadAllRemotes:Function = (type:string="REL"): Array<Promise<Object>> =>{
-    const remoteScopes = Object.keys(remotes[type]);
+export const loadAllRemotes:Function = (type:string="relative"): Array<Promise<Object>> =>{
+    const remoteScopes = Object.keys(remotes);
     const remoteEntries:Array<Promise<Object>> = [];
     try{
       remoteScopes.map((remoteScope) => remoteEntries.push(loadRemoteUrl(getRemoteUrl(remoteScope, type))));
