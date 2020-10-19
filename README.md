@@ -13,6 +13,7 @@ This example is trying to address module_federation implementation challenges an
   Both applications use a wrapper component “LoadRemoteCmp.tsx” from the utils. This encapsulates the logic for initializing the pre loaded container > load & execute the factory function > get the remote component  & mount it. LoadRemoteCmp expects the container remoteEntry to be preloaded, which in this case is loaded by the remotes utility. 
 
 Directory Structure: (Only federation specific files are captured below.)
+```sh
 App
 ->app
 ->->federation
@@ -32,7 +33,7 @@ App
 ->->webpack
 ->->->webpack.base.babel.js
 ->->...scripts, generators...
-
+```
 ### Installation
 
 ```sh
