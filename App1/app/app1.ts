@@ -3,4 +3,4 @@
 
 // Here we are setting the webpack public path of this container.
 
-__webpack_public_path__ = new URL(document.currentScript.src).origin + '/';
+__webpack_public_path__ = `${new URL(document.currentScript.src).origin}/`;

@@ -30,7 +30,9 @@ function ConnectedCard(props) {
     if (refSimpleCard.current) {
       props.getExposedMethods({
         exposedOnClick: () => {
-          refSimpleCard?.current?.onClickBtn();
+          if(refSimpleCard.current.onClickBtn){
+            refSimpleCard.current.onClickBtn();
+          }
         },
       });
     }

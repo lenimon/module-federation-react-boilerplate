@@ -1,7 +1,7 @@
 // Important modules this config uses
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const { HashedModuleIdsPlugin } = require('webpack');
+// const { HashedModuleIdsPlugin } = require('webpack');
 const TerserPlugin = require('terser-webpack-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
 
@@ -11,8 +11,8 @@ module.exports = require('./webpack.base.babel')({
   // In production, we skip all hot-reloading stuff
   entry: {
     polyfill: require.resolve('react-app-polyfill/ie11'),
-    app: path.join(process.cwd(), 'app/bootstrap.js'),
-    app2: path.join(process.cwd(), 'app/app2.js'),
+    app: path.join(process.cwd(), 'app/bootstrap.ts'),
+    app2: path.join(process.cwd(), 'app/app2.ts'),
   },
 
   // Utilize long-term caching by adding content hashes (not compilation hashes) to compiled assets
@@ -22,6 +22,7 @@ module.exports = require('./webpack.base.babel')({
   },
 
   optimization: {
+    moduleIds: 'deterministic',
     minimize: true,
     minimizer: [
       new TerserPlugin({
@@ -51,7 +52,7 @@ module.exports = require('./webpack.base.babel')({
       maxInitialRequests: 10,
       minSize: 0,
       cacheGroups: {
-        vendor: {
+        defaultVendors: {
           test: /[\\/]node_modules[\\/]/,
           name(module) {
             const packageName = module.context.match(
@@ -90,11 +91,11 @@ module.exports = require('./webpack.base.babel')({
       minRatio: 0.8,
     }),
 
-    new HashedModuleIdsPlugin({
-      hashFunction: 'sha256',
-      hashDigest: 'hex',
-      hashDigestLength: 20,
-    }),
+    // new HashedModuleIdsPlugin({
+    //   hashFunction: 'sha256',
+    //   hashDigest: 'hex',
+    //   hashDigestLength: 20,
+    // }),
   ],
 
   performance: {
