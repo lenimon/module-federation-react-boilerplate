@@ -1,6 +1,7 @@
 const path = require('path');
 const express = require('express');
 const compression = require('compression');
+const cors = require('cors');
 
 module.exports = function addProdMiddlewares(app, options) {
   const publicPath = options.publicPath || '/';
@@ -9,6 +10,11 @@ module.exports = function addProdMiddlewares(app, options) {
   // compression middleware compresses your server responses which makes them
   // smaller (applies also to assets). You can read more about that technique
   // and other good practices on official Express.js docs http://mxs.is/googmy
+  const corsOptions = {
+    origin: '*',
+    optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+  };
+  app.use(cors(corsOptions));
   app.use(compression());
   app.use(publicPath, express.static(outputPath));
 

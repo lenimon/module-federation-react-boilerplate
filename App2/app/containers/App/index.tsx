@@ -34,6 +34,7 @@ export default function App() {
         <meta name="description" content="A React.js Boilerplate application" />
       </Helmet>
       <h1>App2</h1>
+      <ButtonCmp clickedButton={saveClickHandler}/>
       <LoadRemoteCmp
         remoteContainer="app1"
         remoteModule="getConnectedCard"
@@ -45,7 +46,6 @@ export default function App() {
           getExposedMethods: setExposedMethods,
         }}
       />
-      <ButtonCmp clickedButton={saveClickHandler}/>
     </div>
   );
 }

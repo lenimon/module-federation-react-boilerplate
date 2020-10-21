@@ -1,7 +1,6 @@
 // Important modules this config uses
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-// const { HashedModuleIdsPlugin } = require('webpack');
 const TerserPlugin = require('terser-webpack-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
 
@@ -17,12 +16,12 @@ module.exports = require('./webpack.base.babel')({
 
   // Utilize long-term caching by adding content hashes (not compilation hashes) to compiled assets
   output: {
-    filename: '[name].[chunkhash].js',
-    chunkFilename: '[name].[chunkhash].chunk.js',
+    filename: '[name].js',
+    chunkFilename: '[name].chunk.js',
   },
 
   optimization: {
-    moduleIds: 'deterministic',
+    chunkIds: 'named',
     minimize: true,
     minimizer: [
       new TerserPlugin({
@@ -47,8 +46,10 @@ module.exports = require('./webpack.base.babel')({
     sideEffects: true,
     concatenateModules: true,
     runtimeChunk: 'single',
+    emitOnErrors: true,
     splitChunks: {
       chunks: 'all',
+      hidePathInfo: false,
       maxInitialRequests: 10,
       minSize: 0,
       cacheGroups: {
@@ -83,21 +84,14 @@ module.exports = require('./webpack.base.babel')({
       },
       inject: true,
     }),
-
     new CompressionPlugin({
       algorithm: 'gzip',
       test: /\.js$|\.css$|\.html$/,
       threshold: 10240,
       minRatio: 0.8,
     }),
-
-    // new HashedModuleIdsPlugin({
-    //   hashFunction: 'sha256',
-    //   hashDigest: 'hex',
-    //   hashDigestLength: 20,
-    // }),
   ],
-
+  devtool: 'eval-source-map',
   performance: {
     assetFilter: (assetFilename) =>
       !/(\.map$)|(^(main\.|favicon\.))/.test(assetFilename),

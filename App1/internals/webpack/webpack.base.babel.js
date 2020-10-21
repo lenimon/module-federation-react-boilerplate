@@ -5,6 +5,10 @@
 const path = require('path');
 const webpack = require('webpack');
 const federationConfig = require('../../app/federation/config.json');
+const getClientEnvironment = require('../env');
+const env = getClientEnvironment().raw;
+const BUILD_FOLDER_PATH = env.BUILD_FOLDER_PATH || 'build';
+const PUBLIC_PATH = env.PUBLIC_PATH || '/';
 const { ModuleFederationPlugin } = webpack.container;
 
 module.exports = (options) => ({
@@ -13,8 +17,8 @@ module.exports = (options) => ({
   output: Object.assign(
     {
       // Compile into js/build.js
-      path: path.resolve(process.cwd(), 'build'),
-      publicPath: '/',
+      path: path.resolve(process.cwd(), BUILD_FOLDER_PATH),
+      publicPath: PUBLIC_PATH,
     },
     options.output,
   ), // Merge with env dependent settings
@@ -105,7 +109,7 @@ module.exports = (options) => ({
         'react-redux': { singleton: true, requiredVersion: '16.8.6' },
         'react-dom': { singleton: true, requiredVersion: '16.8.6' },
         '@material-ui/core': { singleton: true, requiredVersion: '4.11.0' },
-        '@material-ui/styles': { singleton: true, requiredVersion: '4.11.0' },
+        '@material-ui/styles': { singleton: true, requiredVersion: '4.10.0' },
       },
     }),
   ]),

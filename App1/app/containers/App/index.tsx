@@ -40,6 +40,7 @@ export default function App() {
         }}
       />
       <ConnectedCard getExposedMethods={setExposedMethods} />
+
     </div>
   );
 }

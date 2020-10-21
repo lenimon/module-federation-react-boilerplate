@@ -4,12 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start:app1": "cd App1 && npm start",
-    "start:app2": "cd App2 && npm start",
-    "start": "concurrently \"npm run start:app1\" \"npm run start:app2\"",
-    "build:app1": "cd App1 && npm run build",
-    "build:app2": "cd App2 && npm run build",
-    "build": "concurrently \"npm run build:app1\" \"npm run build:app2\""
+    "start:app1": "cd App1 && yarn start",
+    "start:app2": "cd App2 && yarn start",
+    "start:app1:prod": "cd App1 && yarn run start:production",
+    "start:app2:prod": "cd App2 && yarn run start:production",
+    "start": "concurrently \"yarn run start:app1\" \"yarn run start:app2\"",
+    "build:app1": "cd App1 && yarn run build",
+    "build:app2": "cd App2 && yarn run build",
+    "build": "concurrently \"yarn run build:app1\" \"yarn run build:app2\"",
+    "start:prod": "concurrently \"yarn run start:app1:prod\" \"yarn run start:app2:prod\""
   },
   "keywords": [
     "module-federation",

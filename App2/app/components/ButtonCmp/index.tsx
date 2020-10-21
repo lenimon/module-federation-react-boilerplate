@@ -16,6 +16,7 @@ const ButtonCmp = (props) => (
     onClick={() => props.clickedButton()}
     variant="contained"
     color="primary"
+    className={props.classes.root}
   >
     App2 Button
   </Button>
