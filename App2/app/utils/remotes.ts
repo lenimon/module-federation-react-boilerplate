@@ -1,5 +1,5 @@
-import config from '../federation/config.json';
-const remoteEntries = config.remoteEntries;
+import { getRemoteEntries } from '../../internals/federation.config';
+const remoteEntries = getRemoteEntries();
 
 const loadRemoteUrl:Function = async (url: string):Promise<Object>=>{
   return new Promise((resolve, reject)=>{

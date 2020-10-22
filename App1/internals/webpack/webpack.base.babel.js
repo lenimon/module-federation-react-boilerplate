@@ -4,7 +4,8 @@
 
 const path = require('path');
 const webpack = require('webpack');
-const federationConfig = require('../../app/federation/config.json');
+const { getFederationConfig } = require('../federation.config');
+const federationConfig = getFederationConfig();
 const getClientEnvironment = require('../env');
 const env = getClientEnvironment().raw;
 const BUILD_FOLDER_PATH = env.BUILD_FOLDER_PATH || 'build';

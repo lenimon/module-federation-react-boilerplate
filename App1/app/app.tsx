@@ -48,20 +48,21 @@ const initialState = {};
 const store = configureStore(initialState, history);
 const MOUNT_NODE = document.getElementById('app');
 
-const render = async messages => {
-  ReactDOM.render(
-    <Provider store={store}>
-      <LanguageProvider messages={messages}>
-        <ConnectedRouter history={history}>
-          <App />
-        </ConnectedRouter>
-      </LanguageProvider>
-    </Provider>,
-    MOUNT_NODE,
-  );
-};
-  // Load all remote entries
+// Load all remote entries
 Promise.all(loadAllRemotes()).then(()=>{ //REL refers to relative remote urls with respect to host domain. Change it to FULL if you need full path and change in remotes.ts accordingly
+  const render = async messages => {
+    ReactDOM.render(
+      <Provider store={store}>
+        <LanguageProvider messages={messages}>
+          <ConnectedRouter history={history}>
+            <App />
+          </ConnectedRouter>
+        </LanguageProvider>
+      </Provider>,
+      MOUNT_NODE,
+    );
+  };
+
   if (module.hot) {
     // Hot reloadable React components and translation json files
     // modules.hot.accept does not accept dynamic dependencies,

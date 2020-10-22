@@ -1,8 +1,5 @@
 import React from 'react';
-import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import CardContent from '@material-ui/core/CardContent';
-import Typography from '@material-ui/core/Typography';
+import { Card, CardActionArea, CardContent, Typography }  from '@material-ui/core';
 import { withStyles } from '@material-ui/styles';
 import { SEL_KEY } from '../../containers/ConnectedCard/constants';
 
