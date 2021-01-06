@@ -108,13 +108,13 @@ module.exports = (options) => ({
         react: { singleton: true, requiredVersion: '16.8.6' },
         'react-redux': { singleton: true, requiredVersion: '16.8.6' },
         'react-dom': { singleton: true, requiredVersion: '16.8.6' },
-        '@material-ui/core/esm/': {
+        '@material-ui/core/': {
           singleton: true,
-          requiredVersion: '4.11.0',
+          requiredVersion: '4.11.1',
         },
-        '@material-ui/styles/esm/': {
+        '@material-ui/styles/': {
           singleton: true,
-          requiredVersion: '4.10.0',
+          requiredVersion: '4.11.1',
         },
       },
     }),
