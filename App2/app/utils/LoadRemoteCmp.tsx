@@ -26,11 +26,7 @@ function LoadRemoteCmp(props: Props) {
 
   const loadRemoteFactory = async () => {
     try {
-      await __webpack_init_sharing__('default');
-      const container = window[remoteContainer];
-      // Initialize the container, it may provide shared modules
-      await container.init(__webpack_share_scopes__.default);
-      const module = await container.get(remoteModule);
+      const module = await window[remoteContainer].get(remoteModule);
       const factory = module().default;
       const component = config?factory(config):factory();
       setComponent(component);

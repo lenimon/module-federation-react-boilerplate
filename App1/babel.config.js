@@ -13,6 +13,21 @@ module.exports = {
     'styled-components',
     '@babel/plugin-proposal-class-properties',
     '@babel/plugin-syntax-dynamic-import',
+    [
+      'transform-imports',
+      {
+        '@material-ui/core': {
+          // Use "transform: '@material-ui/core/${member}'," if your bundler does not support ES modules
+          transform: (member) => `@material-ui/core/esm/${member}`,
+          preventFullImport: true,
+        },
+        '@material-ui/styles': {
+          // Use "transform: '@material-ui/icons/${member}'," if your bundler does not support ES modules
+          transform: (member) => `@material-ui/styles/esm/${member}`,
+          preventFullImport: true,
+        },
+      },
+    ],
   ],
   env: {
     production: {

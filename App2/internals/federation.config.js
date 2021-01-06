@@ -13,8 +13,8 @@ function getFederationConfig() {
 function getRemoteEntries() {
   return {
     app1: {
-      full_path: 'http://localhost:5001/remoteEntry.js',
-      relative_path: '5001/remoteEntry.js',
+      full_path: 'http://localhost:5001/secure/app1/remoteEntry.js',
+      relative_path: '5001/secure/app1/remoteEntry.js',
     },
   };
 }

@@ -8,8 +8,8 @@ const { getFederationConfig } = require('../federation.config');
 const federationConfig = getFederationConfig();
 const getClientEnvironment = require('../env');
 const env = getClientEnvironment().raw;
-const BUILD_FOLDER_PATH = env.BUILD_FOLDER_PATH || 'build';
 const PUBLIC_PATH = env.PUBLIC_PATH || '/';
+const BUILD_FOLDER_PATH = env.BUILD_FOLDER_PATH || `build`;
 const { ModuleFederationPlugin } = webpack.container;
 
 module.exports = (options) => ({
@@ -18,7 +18,7 @@ module.exports = (options) => ({
   output: Object.assign(
     {
       // Compile into js/build.js
-      path: path.resolve(process.cwd(), BUILD_FOLDER_PATH),
+      path: path.resolve(process.cwd(), `${BUILD_FOLDER_PATH}${PUBLIC_PATH}`),
       publicPath: PUBLIC_PATH,
     },
     options.output,
@@ -101,7 +101,6 @@ module.exports = (options) => ({
     }),
     new ModuleFederationPlugin({
       name: federationConfig.hostScope,
-      library: { type: 'var', name: federationConfig.hostScope },
       filename: 'remoteEntry.js',
       remotes: federationConfig.remoteScopes,
       exposes: federationConfig.exposedFactories,
@@ -109,12 +108,24 @@ module.exports = (options) => ({
         react: { singleton: true, requiredVersion: '16.8.6' },
         'react-redux': { singleton: true, requiredVersion: '16.8.6' },
         'react-dom': { singleton: true, requiredVersion: '16.8.6' },
-        '@material-ui/core': { singleton: true, requiredVersion: '4.11.0' },
-        '@material-ui/styles': { singleton: true, requiredVersion: '4.10.0' },
+        '@material-ui/core/esm/': {
+          singleton: true,
+          requiredVersion: '4.11.0',
+        },
+        '@material-ui/styles/esm/': {
+          singleton: true,
+          requiredVersion: '4.10.0',
+        },
       },
     }),
   ]),
   resolve: {
+    alias: {
+      stream: 'stream-browserify',
+      path: 'path-browserify',
+      process: 'process/browser',
+      domain: 'domain-browser',
+    },
     modules: ['node_modules', 'app'],
     extensions: ['.js', '.jsx', '.react.js', '.ts', '.tsx'],
     mainFields: ['browser', 'jsnext:main', 'main'],

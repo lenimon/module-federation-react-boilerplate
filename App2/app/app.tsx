@@ -47,9 +47,7 @@ openSansObserver.load().then(() => {
 const initialState = {};
 const store = configureStore(initialState, history);
 const MOUNT_NODE = document.getElementById('app');
-
-// Load all remote entries
-Promise.all(loadAllRemotes()).then(()=>{ //REL refers to relative remote urls with respect to host domain. Change it to FULL if you need full path and change in remotes.ts accordingly
+const onAppLaunch = () => {
   const render = async messages => {
     ReactDOM.render(
       <Provider store={store}>
@@ -91,4 +89,12 @@ Promise.all(loadAllRemotes()).then(()=>{ //REL refers to relative remote urls wi
   } else {
     render(translationMessages);
   }
+}
+
+// Load all remote entries
+Promise.all(loadAllRemotes()).then(()=>{ //REL refers to relative remote urls with respect to host domain. Change it to FULL if you need full path and change in remotes.ts accordingly
+  onAppLaunch();
+}).catch((err)=>{
+  console.log(err);
+  onAppLaunch();
 });

@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Button } from '@material-ui/core';
 import { withStyles } from '@material-ui/styles';
 
-const styles = theme => ({
+const styles = (theme) => ({
   root: {
     maxWidth: 345,
   },

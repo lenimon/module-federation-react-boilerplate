@@ -1,9 +1,14 @@
 import React from 'react';
-import { Card, CardActionArea, CardContent, Typography }  from '@material-ui/core';
+import {
+  Card,
+  CardActionArea,
+  CardContent,
+  Typography,
+} from '@material-ui/core';
 import { withStyles } from '@material-ui/styles';
 import { SEL_KEY } from '../../containers/ConnectedCard/constants';
 
-const styles = theme => ({
+const styles = (theme) => ({
   root: {
     minWidth: 345,
   },
@@ -13,39 +18,37 @@ const styles = theme => ({
 });
 
 export type ActionProps = {
-  click: (arg0: {
-    keyword: string;
-    defenition: string;
-  }) => Object;
+  click: (arg0: { keyword: string; defenition: string }) => Object;
 };
 
 export type DataProps = {
-  [SEL_KEY]:{
+  [SEL_KEY]: {
     keyword: string;
     defenition: string;
-  }
+  };
 };
 
-type Props = ActionProps & DataProps & {
-  classes: any;
-  className?: string;
-  style?: any;
-}
+type Props = ActionProps &
+  DataProps & {
+    classes: any;
+    className?: string;
+    style?: any;
+  };
 
-class SimpleCard extends React.Component<Props>  {
-  constructor(props: Props){
+class SimpleCard extends React.Component<Props> {
+  constructor(props: Props) {
     super(props);
   }
 
   // Exposing the onClickBtn handler. On call, invokes the click dispatch action from props
   onClickBtn = () => {
     this.props.click({
-      keyword: "click_key",
-      defenition: "click_def"
-    })
-  }
+      keyword: 'click_key',
+      defenition: 'click_def',
+    });
+  };
 
-  render(){
+  render() {
     const { classes, click } = this.props;
     const { keyword, defenition } = this.props[SEL_KEY];
     return (

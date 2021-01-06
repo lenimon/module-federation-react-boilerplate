@@ -1,0 +1,53 @@
+Arguments: 
+  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js install
+
+PATH: 
+  C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\lenins.george\bin;C:\ProgramData\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0;C:\Windows\System32\OpenSSH;C:\Windows\CCM;C:\Windows\CCM;C:\Windows\CCM;C:\Program Files (x86)\Sennheiser\SoftphoneSDK;C:\Program Files\TortoiseGit\bin;C:\Program Files (x86)\Yarn\bin;C:\Program Files\MATLAB\MATLAB Runtime\v92\runtime\win64;C:\Program Files\nodejs;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\110\Tools\Binn;C:\Program Files (x86)\Microsoft SQL Server\120\Tools\Binn\ManagementStudio;C:\Program Files (x86)\Microsoft SQL Server\120\Tools\Binn;C:\Program Files\Microsoft SQL Server\120\Tools\Binn;C:\Program Files (x86)\Microsoft SQL Server\120\DTS\Binn;C:\Program Files\Microsoft SQL Server\120\DTS\Binn;C:\Program Files\TortoiseSVN\bin;C:\Program Files\Git\cmd;C:\Users\lenins.george\AppData\Local\Microsoft\WindowsApps;C:\Users\lenins.george\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\lenins.george\AppData\Roaming\npm
+
+Yarn version: 
+  1.9.4
+
+Node version: 
+  12.18.2
+
+Platform: 
+  win32 x64
+
+Trace: 
+  Error: connect ETIMEDOUT 104.16.18.35:443
+      at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1141:16)
+
+npm manifest: 
+  {
+    "name": "react-boilerplate-module-federation",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+      "start:app1": "cd App1 && yarn start",
+      "start:app2": "cd App2 && yarn start",
+      "start:app1:prod": "cd App1 && yarn run start:production",
+      "start:app2:prod": "cd App2 && yarn run start:production",
+      "start": "concurrently \"yarn run start:app1\" \"yarn run start:app2\"",
+      "build:app1": "cd App1 && yarn run build",
+      "build:app2": "cd App2 && yarn run build",
+      "build": "concurrently \"yarn run build:app1\" \"yarn run build:app2\"",
+      "start:prod": "concurrently \"yarn run start:app1:prod\" \"yarn run start:app2:prod\""
+    },
+    "keywords": [
+      "module-federation",
+      "react-boilerplate"
+    ],
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+      "concurrently": "^5.3.0"
+    },
+    "dependencies": {}
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
