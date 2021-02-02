@@ -1,10 +1,19 @@
 import connectedCard from '../../containers/ConnectedCard';
-import { setUseInjectSaga, setUseInjectReducer } from '../../containers/config'
+import {
+  setUseInjectSaga,
+  setUseInjectReducer,
+  setInjectWithFallback,
+} from '../../containers/config';
 export default function getConnectedCard({
   useInjectSaga,
-  useInjectReducer
+  useInjectReducer,
+  injectedFallback,
 }) {
   setUseInjectSaga(useInjectSaga);
   setUseInjectReducer(useInjectReducer);
+  setInjectWithFallback(
+    injectedFallback.withFallback,
+    injectedFallback.fallbackProps,
+  );
   return connectedCard;
 }

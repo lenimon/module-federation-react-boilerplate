@@ -11,12 +11,8 @@ const loadRemoteUrl: Function = async (
     element.src = url;
     element.type = 'text/javascript';
     element.onload = async () => {
-      console.log(`loaded ${url}`);
-      // @ts-ignore
       await __webpack_init_sharing__('default');
-      // @ts-ignore
       await window[remoteScope].init(__webpack_share_scopes__.default);
-      console.log(`initialized remoteScope ${remoteScope}`);
       resolve(`loaded ${url}`);
     };
     element.onerror = () => {

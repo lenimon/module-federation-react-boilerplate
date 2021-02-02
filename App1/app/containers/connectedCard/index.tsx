@@ -8,15 +8,20 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { compose, bindActionCreators } from 'redux';
-import { getUseInjectSaga, getUseInjectReducer } from '../config';
+import {
+  getUseInjectSaga,
+  getUseInjectReducer,
+  getInjectWithFallback,
+} from '../config';
 import reducer from './reducer';
 import { SEL_KEY } from './constants';
 import saga from './saga';
-import SimpleCard, { ActionProps, DataProps } from '../../components/SimpleCard';
+import SimpleCard, {
+  ActionProps,
+  DataProps,
+} from '../../components/SimpleCard';
 import { click } from './actions';
-import {
-  makeSelectSimpleCard,
-} from './selectors';
+import { makeSelectSimpleCard } from './selectors';
 
 function ConnectedCard(props) {
   const useInjectReducer = getUseInjectReducer();
@@ -30,36 +35,43 @@ function ConnectedCard(props) {
     if (refSimpleCard.current) {
       props.getExposedMethods({
         exposedOnClick: () => {
-          if(refSimpleCard.current.onClickBtn){
+          if (refSimpleCard.current.onClickBtn) {
             refSimpleCard.current.onClickBtn();
           }
         },
       });
+      throw Error('Thrown from useEffect');
     }
   }, [refSimpleCard.current]);
 
-  return (
-    <SimpleCard
-      {...props}
-      simpleCardRef={refSimpleCard}
-    />
-  );
+  return <SimpleCard {...props} simpleCardRef={refSimpleCard} />;
 }
 
 const mapStateToProps: (state) => DataProps = createStructuredSelector({
-  [SEL_KEY]: makeSelectSimpleCard
+  [SEL_KEY]: makeSelectSimpleCard,
 });
 
 function mapDispatchToProps(dispatch): ActionProps {
   return bindActionCreators(
     {
-      click
+      click,
     },
     dispatch,
   );
 }
 
+const { withFallback } = getInjectWithFallback();
+const fallbackProps = getInjectWithFallback().fallbackProps
+  ? getInjectWithFallback().fallbackProps
+  : {
+      featureName: 'App1 Card(Remote)',
+      // fallbackComponent: () => <p>oops, something went wrong</p>,
+    };
+
 const withConnect = connect(mapStateToProps, mapDispatchToProps);
-const withComposed = compose(withConnect)(ConnectedCard);
+const withComposed = compose(
+  withConnect,
+  withFallback(fallbackProps),
+)(ConnectedCard);
 
 export default withComposed;

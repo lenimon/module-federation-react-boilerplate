@@ -28,7 +28,7 @@ function LoadRemoteCmp(props: Props) {
     try {
       const module = await window[remoteContainer].get(remoteModule);
       const factory = module().default;
-      const component = config?factory(config):factory();
+      const component = config ? factory(config) : factory();
       setComponent(component);
     } catch (error) {
       console.log(error);
@@ -37,17 +37,19 @@ function LoadRemoteCmp(props: Props) {
     }
   };
 
-  React.useEffect(()=>{
+  React.useEffect(() => {
     loadRemoteFactory();
-    return ()=>{console.log("unmounting")}
-  },[])
+    return () => {
+      console.log('unmounting');
+    };
+  }, []);
 
   if (status === 'failed') {
     return <span>failed</span>;
   }
 
   if (Component) {
-    if(componentProps) return <Component {...componentProps} />;
+    if (componentProps) return <Component {...componentProps} />;
     return <Component />;
   }
 

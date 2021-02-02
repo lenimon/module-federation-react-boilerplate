@@ -8,10 +8,11 @@
 
 import * as React from 'react';
 import { Helmet } from 'react-helmet';
-import ButtonCmp from '../../components/ButtonCmp';
 import { useInjectSaga } from 'utils/injectSaga';
 import { useInjectReducer } from 'utils/injectReducer';
+import { withFallback } from 'utils/withFallback';
 import LoadRemoteCmp from 'utils/LoadRemoteCmp';
+import ButtonCmp from '../../components/ButtonCmp';
 
 export default function App() {
   const exposedRef = React.useRef({ methods: {} });
@@ -25,6 +26,14 @@ export default function App() {
     exposedRef.current.methods.exposedOnClick();
   };
 
+  const injectedFallback = {
+    withFallback,
+    fallbackProps: {
+      featureName: 'App2 Card(Host)',
+      // fallbackComponent: () => <p>oops, something went wrong</p>,
+    },
+  };
+
   return (
     <div>
       <Helmet
@@ -34,13 +43,14 @@ export default function App() {
         <meta name="description" content="A React.js Boilerplate application" />
       </Helmet>
       <h1>App2</h1>
-      <ButtonCmp clickedButton={saveClickHandler}/>
+      <ButtonCmp clickedButton={saveClickHandler} />
       <LoadRemoteCmp
         remoteContainer="app1"
         remoteModule="getConnectedCard"
         config={{
           useInjectSaga,
-          useInjectReducer
+          useInjectReducer,
+          injectedFallback,
         }}
         componentProps={{
           getExposedMethods: setExposedMethods,
