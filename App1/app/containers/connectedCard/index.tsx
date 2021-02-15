@@ -8,11 +8,13 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { compose, bindActionCreators } from 'redux';
+// import {withFallback} from 'utils/withFallback';
 import {
   getUseInjectSaga,
   getUseInjectReducer,
   getInjectWithFallback,
 } from '../config';
+// import ErrorBoundary from 'components/SectionError';
 import reducer from './reducer';
 import { SEL_KEY } from './constants';
 import saga from './saga';
@@ -22,6 +24,8 @@ import SimpleCard, {
 } from '../../components/SimpleCard';
 import { click } from './actions';
 import { makeSelectSimpleCard } from './selectors';
+
+// const fallbackData = React.lazy(() => getInjectWithFallback());
 
 function ConnectedCard(props) {
   const useInjectReducer = getUseInjectReducer();
@@ -44,7 +48,9 @@ function ConnectedCard(props) {
     }
   }, [refSimpleCard.current]);
 
-  return <SimpleCard {...props} simpleCardRef={refSimpleCard} />;
+  return (
+      <SimpleCard {...props} simpleCardRef={refSimpleCard} />
+  );
 }
 
 const mapStateToProps: (state) => DataProps = createStructuredSelector({
@@ -60,18 +66,17 @@ function mapDispatchToProps(dispatch): ActionProps {
   );
 }
 
-const { withFallback } = getInjectWithFallback();
-const fallbackProps = getInjectWithFallback().fallbackProps
-  ? getInjectWithFallback().fallbackProps
-  : {
-      featureName: 'App1 Card(Remote)',
-      // fallbackComponent: () => <p>oops, something went wrong</p>,
-    };
-
+// const { withFallback } = getInjectWithFallback();
+// const fallbackProps = getInjectWithFallback().fallbackProps
+//   ? getInjectWithFallback().fallbackProps
+//   : {
+//     featureName: 'App1 Card(Remote)',
+//     fallbackComponent: () => <p>oops, something went wrong app 1</p>,
+//   };
 const withConnect = connect(mapStateToProps, mapDispatchToProps);
 const withComposed = compose(
   withConnect,
-  withFallback(fallbackProps),
+  // withFallback(fallbackProps)
 )(ConnectedCard);
 
 export default withComposed;

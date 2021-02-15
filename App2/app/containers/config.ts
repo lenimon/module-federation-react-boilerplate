@@ -17,8 +17,8 @@ export function setUseInjectReducer(reducerUtil) {
 export function getUseInjectReducer() {
   return injectReducer || useInjectReducer;
 }
-export function setInjectWithFallback(fallbackHOC, fallbackProps) {
-  injectWithFallback = { withFallback: fallbackHOC, fallbackProps };
+export function setInjectWithFallback( fallbackProps) {
+  injectWithFallback = {  fallbackProps };
 }
 export function getInjectWithFallback() {
   return injectWithFallback || { withFallback, fallbackProps: null };
