@@ -13,7 +13,7 @@ import LoadRemoteCmp from '../../utils/LoadRemoteCmp';
 
 export default function App() {
   const exposedRef = React.useRef({ methods: {} });
-
+  const ebProps = { featureName: 'App1', errorMessage: 'Error from app1' };
   // bind exposed methods from remote to host page
   const setExposedMethods = (exposedMethods) => {
     exposedRef.current.methods = exposedMethods;
@@ -39,7 +39,7 @@ export default function App() {
           clickedButton: saveClickHandler,
         }}
       />
-      <ConnectedCard getExposedMethods={setExposedMethods} />
+      <ConnectedCard ebProps={ebProps} getExposedMethods={setExposedMethods} />
     </div>
   );
 }

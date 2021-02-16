@@ -27,10 +27,9 @@ export default function App() {
   };
 
   const injectedFallback = {
-    // withFallback,
-    fallbackProps: {
+    ebProps: {
       featureName: 'App2 Card(Host)',
-      errorMessage: "oops, something went wrong from app2",
+      errorMessage: 'oops, something went wrong from app2',
     },
   };
 

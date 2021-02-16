@@ -1,4 +1,3 @@
-import { withFallback } from 'utils/withFallback';
 import { useInjectSaga } from '../utils/injectSaga';
 import { useInjectReducer } from '../utils/injectReducer';
 let injectSaga;
@@ -17,11 +16,13 @@ export function setUseInjectReducer(reducerUtil) {
 export function getUseInjectReducer() {
   return injectReducer || useInjectReducer;
 }
-export function setInjectWithFallback(fallbackProps) {
-  injectWithFallback = {
-    fallbackProps,
-  };
+export function setInjectWithFallback(injectedEbProps) {
+  injectWithFallback = injectedEbProps;
 }
 export function getInjectWithFallback() {
-  return injectWithFallback || { fallbackProps: null };
+  return (
+    injectWithFallback || {
+      ebProps: null,
+    }
+  );
 }

@@ -8,13 +8,12 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { compose, bindActionCreators } from 'redux';
-// import {withFallback} from 'utils/withFallback';
+import ErrorBoundary from 'components/ErrorBoundary';
 import {
   getUseInjectSaga,
   getUseInjectReducer,
   getInjectWithFallback,
 } from '../config';
-// import ErrorBoundary from 'components/SectionError';
 import reducer from './reducer';
 import { SEL_KEY } from './constants';
 import saga from './saga';
@@ -44,13 +43,10 @@ function ConnectedCard(props) {
           }
         },
       });
-      throw Error('Thrown from useEffect');
     }
   }, [refSimpleCard.current]);
 
-  return (
-      <SimpleCard {...props} simpleCardRef={refSimpleCard} />
-  );
+  return <SimpleCard {...props} simpleCardRef={refSimpleCard} />;
 }
 
 const mapStateToProps: (state) => DataProps = createStructuredSelector({
@@ -66,17 +62,23 @@ function mapDispatchToProps(dispatch): ActionProps {
   );
 }
 
-// const { withFallback } = getInjectWithFallback();
-// const fallbackProps = getInjectWithFallback().fallbackProps
-//   ? getInjectWithFallback().fallbackProps
-//   : {
-//     featureName: 'App1 Card(Remote)',
-//     fallbackComponent: () => <p>oops, something went wrong app 1</p>,
-//   };
 const withConnect = connect(mapStateToProps, mapDispatchToProps);
-const withComposed = compose(
-  withConnect,
-  // withFallback(fallbackProps)
-)(ConnectedCard);
+const withComposed = compose(withConnect)(ConnectedCard);
 
-export default withComposed;
+function ConnectedCardWithEB() {
+  const [ebProps, setEbProps] = React.useState({
+    featureName: 'default',
+    errorMessage: 'default error message',
+  });
+  React.useEffect(() => {
+    const injectedEBProps = getInjectWithFallback();
+    setEbProps({
+      featureName: injectedEBProps.featureName,
+      errorMessage: injectedEBProps.errorMessage,
+    });
+  }, []);
+
+  return <ErrorBoundary ebProps={ebProps}>{withComposed}</ErrorBoundary>;
+}
+
+export default ConnectedCardWithEB;
