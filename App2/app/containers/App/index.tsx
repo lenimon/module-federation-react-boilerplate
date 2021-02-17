@@ -12,6 +12,7 @@ import { useInjectSaga } from 'utils/injectSaga';
 import { useInjectReducer } from 'utils/injectReducer';
 import { withFallback } from 'utils/withFallback';
 import LoadRemoteCmp from 'utils/LoadRemoteCmp';
+import ErrorBoundary from 'components/ErrorBoundary/ErrorBoundary';
 import ButtonCmp from '../../components/ButtonCmp';
 
 export default function App() {
@@ -44,18 +45,20 @@ export default function App() {
       </Helmet>
       <h1>App2</h1>
       <ButtonCmp clickedButton={saveClickHandler} />
-      <LoadRemoteCmp
-        remoteContainer="app1"
-        remoteModule="getConnectedCard"
-        config={{
-          useInjectSaga,
-          useInjectReducer,
-          injectedFallback,
-        }}
-        componentProps={{
-          getExposedMethods: setExposedMethods,
-        }}
-      />
+      <ErrorBoundary>
+        <LoadRemoteCmp
+          remoteContainer="app1"
+          remoteModule="getConnectedCard"
+          config={{
+            useInjectSaga,
+            useInjectReducer,
+            injectedFallback,
+          }}
+          componentProps={{
+            getExposedMethods: setExposedMethods,
+          }}
+          />
+        </ErrorBoundary>
     </div>
   );
 }

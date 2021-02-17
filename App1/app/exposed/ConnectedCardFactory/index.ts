@@ -1,4 +1,4 @@
-// import connectedCard from '../../containers/ConnectedCard';
+import connectedCard from '../../containers/ConnectedCard';
 import errorBoundary from 'components/ErrorBoundary/ErrorBoundary'
 import {
   setUseInjectSaga,
@@ -15,5 +15,5 @@ export default function getConnectedCard({
   setInjectWithFallback(
     injectedFallback.fallbackProps,
   );
-  return errorBoundary;
+  return connectedCard;
 }
