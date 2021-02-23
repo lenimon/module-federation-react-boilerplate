@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { compose, bindActionCreators } from 'redux';
 import ErrorBoundary from 'components/ErrorBoundary';
+import withFallback from 'utils/withFallback';
 import {
   getUseInjectSaga,
   getUseInjectReducer,
@@ -63,22 +64,24 @@ function mapDispatchToProps(dispatch): ActionProps {
 }
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps);
-const withComposed = compose(withConnect)(ConnectedCard);
+const withComposed = compose(withConnect, withFallback)(ConnectedCard);
 
-function ConnectedCardWithEB() {
-  const [ebProps, setEbProps] = React.useState({
-    featureName: 'default',
-    errorMessage: 'default error message',
-  });
-  React.useEffect(() => {
-    const injectedEBProps = getInjectWithFallback();
-    setEbProps({
-      featureName: injectedEBProps.featureName,
-      errorMessage: injectedEBProps.errorMessage,
-    });
-  }, []);
+export default withComposed;
 
-  return <ErrorBoundary ebProps={ebProps}>{withComposed}</ErrorBoundary>;
-}
+// function ConnectedCardWithEB() {
+//   const [ebProps, setEbProps] = React.useState({
+//     featureName: 'default',
+//     errorMessage: 'default error message',
+//   });
+//   React.useEffect(() => {
+//     const injectedEBProps = getInjectWithFallback();
+//     setEbProps({
+//       featureName: injectedEBProps.featureName,
+//       errorMessage: injectedEBProps.errorMessage,
+//     });
+//   }, []);
 
-export default ConnectedCardWithEB;
+//   return <ErrorBoundary ebProps={ebProps}>{withComposed}</ErrorBoundary>;
+// }
+
+// export default ConnectedCardWithEB;

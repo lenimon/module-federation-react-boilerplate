@@ -39,6 +39,9 @@ class SimpleCard extends React.Component<Props> {
   constructor(props: Props) {
     super(props);
   }
+  state = {
+    count: 0,
+  };
 
   // Exposing the onClickBtn handler. On call, invokes the click dispatch action from props
   onClickBtn = () => {
@@ -50,7 +53,9 @@ class SimpleCard extends React.Component<Props> {
 
   render() {
     const { classes, click } = this.props;
+
     const { keyword, defenition } = this.props[SEL_KEY];
+    // console.log(random);
     return (
       <Card className={classes.root}>
         <CardActionArea>

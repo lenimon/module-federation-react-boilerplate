@@ -13,6 +13,7 @@ import { useInjectReducer } from 'utils/injectReducer';
 import { withFallback } from 'utils/withFallback';
 import LoadRemoteCmp from 'utils/LoadRemoteCmp';
 import ButtonCmp from '../../components/ButtonCmp';
+import ErrorTemplate from './errorTemplate';
 
 export default function App() {
   const exposedRef = React.useRef({ methods: {} });
@@ -28,10 +29,13 @@ export default function App() {
 
   const injectedFallback = {
     ebProps: {
-      featureName: 'App2 Card(Host)',
-      errorMessage: 'oops, something went wrong from app2',
+      featureName: 'error',
+      errorMessage: (err) => <ErrorTemplate error={err} />,
     },
   };
+  // const injectedFallback = {
+  //   ebProps: null,
+  // };
 
   return (
     <div>
